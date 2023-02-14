@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <div className='w-full border-b-2 h-[6rem]'>
@@ -7,44 +7,63 @@ const Header = () => {
         <div className='flex h-full items-center'>
           <div className='flex   w-full items-end justify-between'>
             <div className='w-[75px] h-[60px] mb-1'>
-              <a href=''>
+              <Link to={'/'}>
                 <img
                   src='https://www.adidas.co.id/media/logo/adidas-logo.png'
                   alt=''
                   className='mix-blend-multiply'
                 />
-              </a>
+              </Link>
             </div>
             <ul className='flex items-end justify-center w-auto mr-[-10rem]'>
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
-                <a href='' className='text-[1.1rem] text-[#222]'>
+                <Link
+                  to={'/products?search=men'}
+                  href=''
+                  className='text-[1.1rem] text-[#222]'
+                >
                   MEN
-                </a>
+                </Link>
               </li>
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
-                <a href='' className='text-[1.1rem] text-[#222]'>
+                <Link
+                  to={'/products?search=women'}
+                  className='text-[1.1rem] text-[#222]'
+                >
                   WOMEN
-                </a>
+                </Link>
               </li>
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
-                <a href='' className='text-[1.1rem] text-[#222]'>
+                <Link
+                  to={'/products?search=kids'}
+                  className='text-[1.1rem] text-[#222]'
+                >
                   KIDS
-                </a>
+                </Link>
               </li>
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
-                <a href='' className='text-[1.1rem] text-[#222]'>
+                <Link
+                  to={'/products?search=sports'}
+                  className='text-[1.1rem] text-[#222]'
+                >
                   SPORTS
-                </a>
+                </Link>
               </li>
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
-                <a href='' className='text-[1.1rem] text-[#222]'>
+                <Link
+                  to={'/products?search=brands'}
+                  className='text-[1.1rem] text-[#222]'
+                >
                   BRANDS
-                </a>
+                </Link>
               </li>
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
-                <a href='' className='text-[1.1rem] text-[#222]'>
+                <Link
+                  to={'/products?search=outlet'}
+                  className='text-[1.1rem] text-[#222]'
+                >
                   OUTLET
-                </a>
+                </Link>
               </li>
             </ul>
             <div className='flex items-center gap-3'>
@@ -54,11 +73,11 @@ const Header = () => {
                   placeholder='search'
                   className=' outline-none h-full w-full'
                 />
-                <span class='material-symbols-outlined cursor-pointer '>
+                <span className='material-symbols-outlined cursor-pointer '>
                   search
                 </span>
               </div>
-              <span class='material-symbols-outlined cursor-pointer'>
+              <span className='material-symbols-outlined cursor-pointer'>
                 shopping_bag
               </span>
             </div>
@@ -81,9 +100,9 @@ const Header = () => {
             </a>
           </li>
           <li>
-            <a href='' className='font-light'>
+            <Link to={'/register'} className='font-light'>
               signup
-            </a>
+            </Link>
           </li>
           <li>
             <a href=''>
@@ -95,9 +114,9 @@ const Header = () => {
             </a>
           </li>
           <li>
-            <a href='' className='font-light'>
+            <Link to={'/login'} href='' className='font-light'>
               login
-            </a>
+            </Link>
           </li>
         </ul>
       </header>
