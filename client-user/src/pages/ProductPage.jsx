@@ -119,7 +119,7 @@ const ProductPage = () => {
           <div className='flex flex-wrap gap-3 justify-center'>
             {data.map((el) => {
               return (
-                <div className='w-[318px] h-[432px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
+                <div className='w-[318px] h-[432px] border rounded overflow-hidden  relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
                   <a href=''>
                     <span className='material-symbols-outlined absolute top-2 right-2'>
                       favorite

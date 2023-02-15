@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div class='mt-6 '>
@@ -65,6 +67,9 @@ const AddProduct = () => {
           </div>
           <div class='flex [&>*]:px-4 [&>*]:py-4 w-[700px] justify-between'>
             <button
+              onClick={() => {
+                navigate('/products');
+              }}
               className='w-[45%] rounded-full border border-black'
               type='button'
             >

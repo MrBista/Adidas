@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Products = () => {
   return (
@@ -6,10 +7,13 @@ const Products = () => {
       <div class='mt-4'>
         <div class='flex justify-between items-center'>
           <h3>Shoes</h3>
-          <button class='flex items-center bg-indigo-200 rounded-lg px-4 py-2 shadow-lg'>
+          <Link
+            to={'/add-product'}
+            class='flex items-center bg-indigo-200 rounded-lg px-4 py-2 shadow-lg'
+          >
             <span class='material-symbols-outlined'> add </span>
-            <span>New News</span>
-          </button>
+            <span>New Shoes</span>
+          </Link>
         </div>
         <table class='border-collapse text-left table-auto w-full mt-6'>
           <thead>

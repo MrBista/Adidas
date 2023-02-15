@@ -62,5 +62,18 @@
       "createdAt": "2023-02-13",
       "updatedAt": "2023-02-13"
     }
+  ],
+  "users": [
+    {
+      "username": "mr bista",
+      "email": "mrbista@gmail.com",
+      "password": "mrbista"
+    },
+    {
+      "username": "bisma",
+      "email": "bisma@gmail.com",
+      "password": "bisma",
+      "id": "68"
+    }
   ]
 }

@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function RegisterPage() {
+  const [userFrom, setUserForm] = useState({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+  });
+  const handleChange = () => {};
   return (
     <div className='m-auto w-[400px]  mt-8'>
       <div className='flex flex-col items-center gap-y-4'>

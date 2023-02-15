@@ -8,19 +8,20 @@ import RegisterPage from './pages/RegisterPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage';
 import Detail from './pages/Detail';
+import SharedLayout from './pages/SharedLayout';
 
 function App() {
   return (
     <div className='bg-white h-[100vh]'>
       <BrowserRouter>
-        <Header />
         <Routes>
-          <Route path='/' element={<HomePage />}>
-            <Route path='/products' element={<ProductPage />} />
-            <Route path='/detail/:slug' element={<Detail />} />
+          <Route path='/' element={<SharedLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path='products' element={<ProductPage />} />
+            <Route path='detail/:slug' element={<Detail />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
           </Route>
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
           <Route path='*' element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
