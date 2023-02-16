@@ -32,6 +32,10 @@ const router = createBrowserRouter([
         path: '/add-category',
         element: <AddCategories />,
       },
+      {
+        path: 'register',
+        element: <FormUser />,
+      },
     ],
     loader: () => {
       const isLogin = localStorage.getItem('access_token');
@@ -48,10 +52,6 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <FormUser login />,
-      },
-      {
-        path: 'register',
-        element: <FormUser />,
       },
     ],
     loader: () => {

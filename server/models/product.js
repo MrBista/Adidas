@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Product.belongsTo(models.Category, { foreignKey: 'categoryId' });
       Product.belongsTo(models.User, { foreignKey: 'authorId' });
-      Product.hasMany(models.Image, { foreignKey: 'productId' });
+      Product.hasMany(models.Image, {
+        foreignKey: 'productId',
+        onDelete: 'cascade',
+        hooks: true,
+      });
     }
   }
   Product.init(
@@ -21,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       description: { type: DataTypes.TEXT, allowNull: false },
       price: { type: DataTypes.INTEGER, allowNull: false },
       mainImg: { type: DataTypes.TEXT, allowNull: false },
-      categoryId: DataTypes.INTEGER,
-      authorId: DataTypes.INTEGER,
+      categoryId: { type: DataTypes.INTEGER, onDelete: 'cascade' },
+      authorId: { type: DataTypes.INTEGER, onDelete: 'cascade' },
     },
     {
       sequelize,

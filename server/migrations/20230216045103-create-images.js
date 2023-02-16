@@ -16,6 +16,7 @@ module.exports = {
           model: 'Products',
           key: 'id',
         },
+        onDelete: 'cascade',
       },
       imgUrl: {
         allowNull: false,

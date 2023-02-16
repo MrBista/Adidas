@@ -36,10 +36,12 @@ module.exports = {
           model: 'Categories',
           key: 'id',
         },
+        onDelete: 'cascade',
       },
       authorId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,
