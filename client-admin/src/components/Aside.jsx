@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
+import { MdSpaceDashboard, MdCategory } from 'react-icons/md';
+import { GiRunningShoe } from 'react-icons/gi';
 
 const Aside = () => {
   const navigate = useNavigate();
@@ -17,7 +20,7 @@ const Aside = () => {
           >
             <div></div>
             <p href='' class='text-center flex items-center'>
-              <span class='material-symbols-outlined'> dashboard </span>
+              <MdSpaceDashboard className='text-[1.6rem]' />
               <span class='ml-2'>Dashboard</span>
             </p>
           </Link>
@@ -26,7 +29,7 @@ const Aside = () => {
             class='px-2 py-3 active:border-l-4 border-indigo-300 cursor-pointer transition-all duration-100 ease-in rounded-sm hover:bg-indigo-100'
           >
             <p to='/products' href='' class='text-center flex items-center'>
-              <span class='material-symbols-outlined'> newspaper </span>
+              <GiRunningShoe className='text-[1.6rem]' />
               <span class='ml-2'>Products</span>
             </p>
           </Link>
@@ -35,8 +38,17 @@ const Aside = () => {
             class='px-2 py-3 active:border-l-4 border-indigo-300 cursor-pointer transition-all duration-100 ease-in rounded-sm hover:bg-indigo-100'
           >
             <p href='' class='text-center flex items-center'>
-              <span class='material-symbols-outlined'> category </span>
+              <MdCategory className='text-[1.6rem]' />
               <span class='ml-2'>Categories</span>
+            </p>
+          </Link>
+          <Link
+            to={'/register'}
+            class='px-2 py-3 active:border-l-4 border-indigo-300 cursor-pointer transition-all duration-100 ease-in rounded-sm hover:bg-indigo-100'
+          >
+            <p href='' class='text-center flex items-center'>
+              <BsFillPersonPlusFill className='text-[1.6rem]' />
+              <span class='ml-2'>Register</span>
             </p>
           </Link>
         </ul>

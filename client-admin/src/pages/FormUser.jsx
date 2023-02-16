@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const FormUser = ({ login }) => {
+  const navigate = useNavigate();
   const [userForm, setUserForm] = useState({
     username: '',
     email: '',
@@ -41,6 +42,29 @@ const FormUser = ({ login }) => {
       console.log(err);
     }
   };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      const res = await fetch('http://localhost:3000/login', {
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(userForm),
+        method: 'post',
+      });
+      if (!res.ok) {
+        throw new Error(res.text());
+      }
+      const resJson = await res.json();
+      console.log(resJson, '===== access token');
+      localStorage.setItem('access_token', resJson.access_token);
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -72,7 +96,7 @@ const FormUser = ({ login }) => {
               {login ? 'Log in' : 'Register'}
             </h2>
             <div className='mt-12 relative'>
-              <form onSubmit={handleRegister}>
+              <form onSubmit={login ? handleLogin : handleRegister}>
                 {!login && (
                   <div>
                     <div className='text-sm font-bold text-gray-700 tracking-wide'>
@@ -88,7 +112,7 @@ const FormUser = ({ login }) => {
                     />
                   </div>
                 )}
-                <div className={!login && 'mt-8'}>
+                <div className={login ? undefined : 'mt-8'}>
                   <div className='text-sm font-bold text-gray-700 tracking-wide'>
                     Email Address
                   </div>
@@ -132,15 +156,6 @@ const FormUser = ({ login }) => {
                   </button>
                 </div>
               </form>
-              <div className='mt-12 text-sm font-display font-semibold text-gray-700 text-center'>
-                {login ? "Don't have an account ?" : 'Already have an account?'}
-                <Link
-                  to={login ? '/register' : '/login'}
-                  className='cursor-pointer text-indigo-600 hover:text-indigo-800'
-                >
-                  {login ? 'Sign up' : 'Sign in'}
-                </Link>
-              </div>
             </div>
           </div>
         </div>

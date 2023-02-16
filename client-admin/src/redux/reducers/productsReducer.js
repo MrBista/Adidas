@@ -1,11 +1,14 @@
+import {
+  PRODUCT_FAILED,
+  PRODUCT_PENDING,
+  PRODUCT_SUCCESS,
+} from '../action/actionType';
+
 const initialState = {
   products: [],
   isLoading: true,
   errMsg: '',
 };
-const PRODUCT_PENDING = 'product/pending';
-const PRODUCT_SUCCESS = 'product/success';
-const PRODUCT_FAILED = 'product/failed';
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
