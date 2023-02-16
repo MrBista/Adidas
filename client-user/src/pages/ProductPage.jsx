@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getShoes } from '../redux/action/actionCreator';
+import CardShoe from '../components/CardShoe';
 const ProductPage = () => {
-  const { data, isLoading, isError } = useFetch(
-    'http://localhost:3000/products'
-  );
+  const { isLoading, data, errorMsg } = useSelector((state) => {
+    return state.shoes;
+  });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getShoes());
+  }, []);
   if (isLoading) {
     return <h1>masih loading</h1>;
   }
-  console.log(data);
+  console.log(data, '=======', errorMsg);
   return (
     <>
       <div className='w-[90vw] max-w-[1368px] m-auto mt-4'>
@@ -23,7 +29,7 @@ const ProductPage = () => {
           <h3 className='text-[2.5rem] italic'>WOMEN</h3>
           <span className='text-gray-400'>[3123]</span>
         </div>
-        <div className='w-full flex justify-between items-center border border-black mt-8 px-4 h-14 sticky top-4 z-50 '>
+        <div className='w-full flex justify-between items-center border border-black mt-8 px-4 h-14 sticky top-4 z-50 bg-white'>
           <ul className='flex items-center gap-2'>
             <li className='hover:border border border-transparent hover:border-black px-4 py-2'>
               <a
@@ -118,38 +124,7 @@ const ProductPage = () => {
         <div className='m-auto mt-8'>
           <div className='flex flex-wrap gap-3 justify-center'>
             {data.map((el) => {
-              return (
-                <div className='w-[318px] h-[432px] border rounded overflow-hidden  relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-                  <a href=''>
-                    <span className='material-symbols-outlined absolute top-2 right-2'>
-                      favorite
-                    </span>
-                  </a>
-                  <span className='absolute top-4 italic font-light bg-white px-2  left-2 -rotate-90'>
-                    NEW
-                  </span>
-
-                  <div className='flex flex-col'>
-                    <img
-                      src={el.mainImg}
-                      alt=''
-                      className='w-full h-[318px] object-cover'
-                    />
-                    <div className='mt-[.85rem] p-2'>
-                      <h2 className='text-gray-400 font-light capitalize'>
-                        women-sprit
-                      </h2>
-                      <p className='font-light mt-1'>{el.name}</p>
-                      <p className='font-light mt-1'>
-                        {el?.price?.toLocaleString('id-ID', {
-                          style: 'currency',
-                          currency: 'IDR',
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
+              return <CardShoe {...el} key={el.id} />;
             })}
           </div>
         </div>

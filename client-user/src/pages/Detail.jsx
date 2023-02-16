@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigation, useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {
@@ -7,22 +7,33 @@ import {
   HiOutlineChevronDown,
   HiOutlineChevronUp,
 } from 'react-icons/hi';
-import { RxRulerHorizontal, RxEnvelopeClosed } from 'react-icons/rx';
+import { RxRulerHorizontal, RxEnvelopeClosed, RxHeart } from 'react-icons/rx';
 import { BsArrowRight } from 'react-icons/bs';
+import './style.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDetailShoe } from '../redux/action/actionCreator';
 function Detail() {
   const { slug } = useParams();
-
+  const dispatch = useDispatch();
+  const {
+    detail: detailData,
+    isLoading,
+    errMsg,
+  } = useSelector((state) => state.shoeDetail);
+  useEffect(() => {
+    dispatch(getDetailShoe(slug));
+  }, [slug]);
+  if (isLoading) {
+    return <h1>loadingn</h1>;
+  }
+  console.log(detailData, 'ini detail');
   return (
     <>
       <div className='flex'>
-        <div className='flex-1 border-r-[.1rem] border-gray-200'>
+        <div className='flex-1  border-gray-200'>
           <div className='JUMBOTRON'>
             <div className='h-[600px] bg-[#ECEEF0] flex justify-center relative'>
-              <img
-                src='https://www.adidas.co.id/media/catalog/product/g/y/gy9716_2_footwear_photography_side20lateral20view_grey.jpg'
-                alt=''
-                className='h-full'
-              />
+              <img src={detailData.mainImg} alt='' className='h-full' />
 
               <button className='bg-white p-4 border border-black absolute left-6 top-2/4'>
                 <HiOutlineChevronLeft className='text-[2rem] font-thin' />
@@ -44,24 +55,41 @@ function Detail() {
               </div>
             </div>
           </div>
-          <div>
-            <ul>
-              <li></li>
-            </ul>
+          <div className='flex justify-center'>
+            <div className='w-[1000px] mt-10'>
+              <h3 className='text-[2rem] text-black uppercase font-[600]'>
+                {detailData?.name}
+              </h3>
+              <h5 className='mt-4 italic text-[1.4rem] font-[400]'>
+                ULTRALIGHT PERFORMANCE GOLF SHOES MADE IN PART WITH RECYCLED
+                MATERIALS.
+              </h5>
+              <p className='font-light mt-4'>
+                Rethink what light can do and bring your A-game because these
+                adidas golf shoes give new meaning to lightweight performance.
+                The adidas ZG23 BOA® golf shoes are designed for tournament days
+                and competitive play. From the comfort and added energy of a
+                hybrid Lightstrike midsole to the support of a waterproof, soft
+                and adaptive upper, they fuel every drive with an ultralight
+                feel to give you a competitive edge. Dial in the BOA® Fit System
+                for the stability to match powerful drives, and enjoy the
+                close-to-the-ground feel of the six-cleat outsole for a stable
+                stance. After all, you're here to compete.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className='w-[480px] p-6 sticky top-0 h-fit'>
-          <div>
-            <h1 className='text-[52px] leading-[3.5rem] font-medium italic'>
-              4DFWD 2. Innovated to turn weight into forward motion.
+        <div className='w-[480px] p-9 sticky top-0 h-fit '>
+          <div className='px-8'>
+            <h1 className='text-[52px] leading-[3.5rem] font-medium italic uppercase'>
+              {detailData?.name}
             </h1>
             <p className='my-8 font-light text-[.9rem] text-gray-600'>
               WHITE/BLACK/MULTICOLOR[12132]
             </p>
             <p className='my-8'>
-              Rp
-              {'2000'.toLocaleString('id-ID', {
+              {detailData.price?.toLocaleString('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
               })}
@@ -88,15 +116,21 @@ function Detail() {
               </p>
               <p className='flex items-center gap-2'>
                 <RxEnvelopeClosed />
-                <span className='underline text-[.9rem] cursor-pointer hover:bg-black hover:text-white transition-all ease-linear duration-100'>
+                <span className='underline text-[.9rem] cursor-pointer hover:bg-black hover:text-white transition-all ease-linear duration-100 font-light'>
                   Size out of stock?
                 </span>
               </p>
             </div>
-            <div>
-              <button className='bg-black text-white px-4 py-3 w-[290px]'>
-                <span>Add to bag</span>
+            <div className='flex items-center gap-5'>
+              <button className='bg-black text-white px-4 py-3 w-[290px] flex justify-between items-center btn-bag relative'>
+                <span className='uppercase'>Add to bag</span>
+                <span>
+                  <BsArrowRight className='text-[2rem]' />
+                </span>
               </button>
+              <div className='border border-black px-2 py-2 mt-2'>
+                <RxHeart className='text-[2rem]' />
+              </div>
             </div>
           </div>
         </div>

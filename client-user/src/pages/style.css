@@ -1,40 +1,24 @@
-#app {
+.btn-bag::before {
+  content: '';
+  border: 2px solid black;
   height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0.3rem;
+  left: 0.25rem;
+  z-index: -1;
 }
-html,
-body {
+.btn-bag-home {
   position: relative;
+}
+.btn-bag-home::before {
+  content: '';
   height: 100%;
-}
-
-body {
-  background: #eee;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0;
-}
-
-.swiper {
   width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  position: absolute;
+  /* background-color: red; */
+  top: 0.3rem;
+  left: 0.3rem;
+  border: 1px solid #fff;
+  /* z-index: -1; */
 }

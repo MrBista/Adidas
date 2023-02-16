@@ -32,7 +32,11 @@ const FormUser = ({ login }) => {
         throw new Error(response.text());
       }
       const responseJson = await response.json();
-      console.log(responseJson);
+      setUserForm({
+        username: '',
+        email: '',
+        password: '',
+      });
     } catch (err) {
       console.log(err);
     }
