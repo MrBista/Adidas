@@ -4,9 +4,7 @@ class CategoryAdmin {
     // console.log('masuk sini');
     try {
       console.log('masuk');
-      const categories = await Category.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-      });
+      const categories = await Category.findAll({});
       // console.log(categories, 'ini salah?');
       res.status(200).json(categories);
     } catch (err) {

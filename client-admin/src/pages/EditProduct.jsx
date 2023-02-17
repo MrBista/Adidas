@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useMatch, useNavigate } from 'react-router-dom';
+import {
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 
-const AddProduct = () => {
+const EditProduct = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const [inputImages, setInputImages] = useState(['']);
   const [productForm, setProductForm] = useState({
@@ -12,7 +18,26 @@ const AddProduct = () => {
     categoryId: '',
     description: '',
   });
-
+  useEffect(() => {
+    const exactProduct = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/' + id, {
+          headers: {
+            access_token: localStorage.getItem('access_token'),
+          },
+        });
+        if (!res) {
+          throw new Error(res.text());
+        }
+        const resJson = await res.json();
+        // console.log(resJson, 'ini json');
+        setProductForm({ ...productForm, ...resJson });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    exactProduct();
+  }, []);
   const addImagesField = () => {
     setInputImages([...inputImages, ``]);
   };
@@ -50,6 +75,8 @@ const AddProduct = () => {
       console.log(err);
     }
   };
+  console.log(productForm, 'ada gak sih?');
+
   return (
     <>
       <div className=' '>
@@ -138,7 +165,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {inputImages?.map((el, index) => {
+          {productForm.Images?.map((el, index) => {
             return (
               <div key={index}>
                 <label>
@@ -151,6 +178,7 @@ const AddProduct = () => {
                     placeholder='Image shoe'
                     name={index}
                     onChange={(e) => handelInputImages(e.target.value, index)}
+                    value={el.imgUrl}
                   />
                 </div>
               </div>
@@ -188,4 +216,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

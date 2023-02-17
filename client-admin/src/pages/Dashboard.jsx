@@ -1,6 +1,19 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import getCategory from '../redux/fnFetch/getCategory';
+import getProducts from '../redux/fnFetch/getProducts';
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { product, category } = useSelector((state) => state);
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getProducts());
+  }, []);
+  console.log(product, '========', category);
+  if (product.isLoading || category.isLoading) {
+    return <h1>Loading ....</h1>;
+  }
+
   return (
     <>
       <div className='mt-4'>
@@ -8,14 +21,14 @@ const Dashboard = () => {
           <div className='w-64 h-60 shadow-lg mr-6 border border-black rounded-md flex flex-col p-4'>
             <div className='h-20 w-20 self-center'>
               <img
-                src='https://cdn-icons-png.flaticon.com/512/21/21601.png'
+                src='https://i.pinimg.com/736x/dc/53/50/dc5350243970437d9fff2c8db3a9975b--running-shoes-sermon-series.jpg'
                 className='h-[100%] w-[100%] object-cover'
                 alt=''
               />
             </div>
             <div>
-              <h3 className='text-2xl font-[300]'>Total News</h3>
-              <p className='text-[50px]'>10</p>
+              <h3 className='text-2xl font-[300]'>Total Shoes</h3>
+              <p className='text-[50px]'>{product?.products?.length}</p>
             </div>
           </div>
           <div className='w-64 h-60 shadow-lg border border-black rounded-md flex flex-col p-4'>
@@ -28,7 +41,7 @@ const Dashboard = () => {
             </div>
             <div>
               <h3 className='text-2xl font-[300]'>Total Category</h3>
-              <p className='text-[50px]'>20</p>
+              <p className='text-[50px]'>{category?.categories?.length}</p>
             </div>
           </div>
         </div>

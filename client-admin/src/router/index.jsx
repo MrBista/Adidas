@@ -3,6 +3,7 @@ import AddCategories from '../pages/AddCategories';
 import AddProduct from '../pages/AddProduct';
 import Categories from '../pages/Categories';
 import Dashboard from '../pages/Dashboard';
+import EditProduct from '../pages/EditProduct';
 import FormUser from '../pages/FormUser';
 import Products from '../pages/Products';
 import SharedLayout from '../pages/SharedLayout';
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/add-product',
         element: <AddProduct />,
+      },
+      {
+        path: '/edit-product/:id',
+        element: <EditProduct />,
       },
       {
         path: '/add-category',

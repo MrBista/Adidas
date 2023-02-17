@@ -5,6 +5,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import productReducer from './reducers/productsReducer';
+import categoryReducer from './reducers/categoryReducer';
 
 function logger({ getState }) {
   return (next) => (action) => {
@@ -22,6 +23,7 @@ function logger({ getState }) {
 }
 const rootStore = combineReducers({
   product: productReducer,
+  category: categoryReducer,
 });
 
 const store = createStore(rootStore, applyMiddleware(logger, thunk));

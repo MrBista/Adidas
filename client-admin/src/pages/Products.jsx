@@ -1,46 +1,66 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ImPencil2 } from 'react-icons/im';
+import { MdDelete } from 'react-icons/md';
 import getProducts from '../redux/fnFetch/getProducts';
 const Products = () => {
   const dispatch = useDispatch();
+  const [deletedId, setDeletedId] = useState(0);
   const { products, isLoading, errMsg } = useSelector((state) => state.product);
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [deletedId]);
   if (isLoading) {
     return <h1>loading</h1>;
   }
+  const handleDelete = async (id) => {
+    console.log(id);
+    try {
+      const res = await fetch(`http://localhost:3000/${id}`, {
+        method: 'delete',
+        headers: {
+          access_token: localStorage.getItem('access_token'),
+        },
+      });
+      if (!res.ok) {
+        throw new Error(res.text());
+      }
+      setDeletedId(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
-      <div class='mt-4'>
-        <div class='flex justify-between items-center'>
+      <div className='mt-4'>
+        <div className='flex justify-between items-center'>
           <h3>Shoes</h3>
           <Link
             to={'/add-product'}
-            class='flex items-center bg-gray-300 rounded-lg px-4 py-2 shadow-lg'
+            className='flex items-center bg-gray-300 rounded-lg px-4 py-2 shadow-lg'
           >
-            <span class='material-symbols-outlined'> add </span>
+            <span className='material-symbols-outlined'> add </span>
             <span>New Shoes</span>
           </Link>
         </div>
-        <table class='border-collapse text-left table-auto w-full mt-6'>
+        <table className='border-collapse text-left table-auto w-full mt-6'>
           <thead>
-            <tr class='bg-gray-300'>
-              <th class='px-4 py-2 text-center w-12'>No.</th>
-              <th class='px-4 py-2'>Title</th>
-              <th class='px-4 py-2'>Category</th>
-              <th class='px-4 py-2'>Main Image</th>
-              <th class='px-4 py-2'>Images</th>
-              <th class='px-4 py-2'>Price</th>
+            <tr className='bg-gray-300'>
+              <th className='px-4 py-2 text-center w-12'>No.</th>
+              <th className='px-4 py-2'>Title</th>
+              <th className='px-4 py-2'>Category</th>
+              <th className='px-4 py-2'>Main Image</th>
+              <th className='px-4 py-2'>Images</th>
+              <th className='px-4 py-2'>Price</th>
 
-              <th class='px-4 py-2'>Author</th>
-              <th class='px-4 py-2 text-center'>Update</th>
+              <th className='px-4 py-2'>Author</th>
+              <th className='px-4 py-2 text-center'>Update</th>
+              <th className='px-4 py-2 text-center'>Delete</th>
             </tr>
           </thead>
-          <tbody class='[&>*:nth-child(even)]:bg-gray-50'>
+          <tbody className='[&>*:nth-child(even)]:bg-gray-50'>
             {products.map(
               (
                 {
@@ -56,44 +76,50 @@ const Products = () => {
                 i
               ) => {
                 return (
-                  <>
-                    <tr>
-                      <td class='text-center w-12'>{++i}</td>
-                      <td>
-                        <p>{name}</p>
-                      </td>
-                      <td className='text-left'>
-                        <p>{Category.name}</p>
-                      </td>
-                      <td className='text-left'>
-                        <div class='h-24 w-36 aspect-video'>
-                          <img
-                            src={mainImg}
-                            class='h-[100%] w-[100%] object-contain'
-                            alt=''
-                          />
-                        </div>
-                      </td>
-                      <td class=''>
-                        <button class='px-4 py-2 border border-black'>
-                          Show Images
-                        </button>
-                      </td>
+                  <tr key={id}>
+                    <td className='text-center w-12'>{++i}</td>
+                    <td>
+                      <p>{name}</p>
+                    </td>
+                    <td className='text-left'>
+                      <p>{Category.name}</p>
+                    </td>
+                    <td className='text-left'>
+                      <div className='h-24 w-36 aspect-video'>
+                        <img
+                          src={mainImg}
+                          className='h-[100%] w-[100%] object-contain'
+                          alt=''
+                        />
+                      </div>
+                    </td>
+                    <td className=''>
+                      <button className='px-4 py-2 border border-black'>
+                        Show Images
+                      </button>
+                    </td>
 
-                      <td>
-                        <p>{price}</p>
-                      </td>
-                      <td>
-                        <p>{email}</p>
-                      </td>
+                    <td>
+                      <p>{price}</p>
+                    </td>
+                    <td>
+                      <p>{email}</p>
+                    </td>
 
-                      <td class='text-center'>
-                        <a href=''>
-                          <span class='material-symbols-outlined'> edit </span>
-                        </a>
-                      </td>
-                    </tr>
-                  </>
+                    <td className='text-center'>
+                      <Link to={`/edit-product/${id}`}>
+                        <span className='material-symbols-outlined'>
+                          {' '}
+                          edit{' '}
+                        </span>
+                      </Link>
+                    </td>
+                    <td className='text-center'>
+                      <button onClick={() => handleDelete(id)}>
+                        <MdDelete className='text-[1.5rem] block text-red-400' />
+                      </button>
+                    </td>
+                  </tr>
                 );
               }
             )}
