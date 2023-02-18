@@ -2,7 +2,7 @@ const { comparePassword } = require('../helpers/bcryptjs');
 const { signToken } = require('../helpers/jwt');
 const { User } = require('../models');
 class ControllerAdmin {
-  static async register(req, res) {
+  static async register(req, res, next) {
     try {
       const { email, firstName, lastName, username, password } = req.body;
       await User.create({
@@ -15,17 +15,11 @@ class ControllerAdmin {
       });
       res.status(201).json({ message: 'successfully create new user' });
     } catch (err) {
-      if (err.name === 'SequelizeUniqueConstraintError') {
-        res.status(400).json({ message: err.errors[0].message });
-      } else if (err.name === 'SequelizeValidationError') {
-        res.status(400).json({ message: err.errors[0].message });
-      } else {
-        res.status(500).json(err);
-      }
+      next(err);
     }
   }
 
-  static async login(req, res) {
+  static async login(req, res, next) {
     try {
       const { email, password } = req.body;
       if (!email) {
@@ -52,15 +46,7 @@ class ControllerAdmin {
       });
       res.status(200).json({ access_token: generateToken });
     } catch (err) {
-      if (err.name === 'bad email') {
-        res.status(400).json({ message: 'Email is required' });
-      } else if (err.name === 'bad password') {
-        res.status(400).json({ message: 'Password is required' });
-      } else if (err.name === 'unAuth') {
-        res.status(401).json({ message: 'Invalid email/password' });
-      } else {
-        res.status(500).json(err);
-      }
+      next(err);
     }
   }
 }

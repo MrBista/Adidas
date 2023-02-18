@@ -1,7 +1,7 @@
 const { Product, Image, Category, User } = require('../models');
 const { sequelize } = require('../models');
 class ControllerProductAdmin {
-  static async getAllProduct(req, res) {
+  static async getAllProduct(req, res, next) {
     try {
       const products = await Product.findAll({
         include: [
@@ -24,12 +24,11 @@ class ControllerProductAdmin {
 
       res.status(200).json(products);
     } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
+      next(err);
     }
   }
 
-  static async getProductById(req, res) {
+  static async getProductById(req, res, next) {
     try {
       const { id } = req.params;
       const productId = await Product.findOne({
@@ -54,20 +53,15 @@ class ControllerProductAdmin {
         ],
       });
       if (!productId) {
-        throw { name: 'not found' };
+        throw { name: 'not found product' };
       }
       res.status(200).json(productId);
     } catch (err) {
-      console.log(err);
-      if (err.name === 'not found') {
-        res.status(404).json({ message: 'product not found' });
-      } else {
-        res.status(500).json(err);
-      }
+      next(err);
     }
   }
 
-  static async addProduct(req, res) {
+  static async addProduct(req, res, next) {
     const trx = await sequelize.transaction();
     try {
       const { name, description, price, mainImg, categoryId, images } =
@@ -94,13 +88,13 @@ class ControllerProductAdmin {
       res.status(201).json({ message: 'successfully add product' });
       await trx.commit();
     } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-      await trx.commit();
+      await trx.rollback();
+
+      next(err);
     }
   }
 
-  static async editProduct(req, res) {
+  static async editProduct(req, res, next) {
     const trx = await sequelize.transaction();
     try {
       const { name, description, price, mainImg, categoryId, images } =
@@ -109,7 +103,7 @@ class ControllerProductAdmin {
       const singleProduct = await Product.findByPk(productId);
 
       if (!singleProduct) {
-        throw { name: 'product empty' };
+        throw { name: 'not found product' };
       }
 
       await Product.update(
@@ -142,22 +136,18 @@ class ControllerProductAdmin {
       await trx.commit();
       res.status(200).json({ message: 'successfully update product' });
     } catch (err) {
-      await trx.commit();
-      if (err.name === 'product empty') {
-        res.status(404).json({ message: 'product not found' });
-      } else {
-        res.status(500).json(err);
-      }
+      await trx.rollback();
+      next(err);
     }
   }
 
-  static async deleteProduct(req, res) {
+  static async deleteProduct(req, res, next) {
     const trx = await sequelize.transaction();
     try {
       const { productId } = req.params;
       const singleProduct = await Product.findByPk(productId);
       if (!singleProduct) {
-        throw { name: 'not found' };
+        throw { name: 'not found product' };
       }
       await Product.destroy({
         where: {
@@ -168,13 +158,8 @@ class ControllerProductAdmin {
       res.status(200).json({ message: 'successfully delete data' });
       await trx.commit();
     } catch (err) {
-      await trx.commit();
-      console.log(err);
-      if (err.name === 'not found') {
-        res.status(404).json({ message: 'product not found' });
-      } else {
-        res.status(500).json(err);
-      }
+      await trx.rollback();
+      next(err);
     }
   }
 }

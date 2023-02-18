@@ -8,9 +8,8 @@ const getProducts = () => {
   return async (dispatch, getAll) => {
     try {
       dispatch(fetchProductPending());
-      const res = await fetch('http://localhost:3000', {
+      const res = await fetch(import.meta.env.VITE_APP_URL, {
         headers: {
-          'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
           access_token: localStorage.getItem('access_token'),
         },

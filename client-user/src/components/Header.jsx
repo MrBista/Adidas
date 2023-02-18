@@ -19,7 +19,7 @@ const Header = () => {
               <li className='px-2  border-b-4 border-transparent hover:border-b-4 hover:border-black transition-all ease-in duration-200 mr-1'>
                 <Link
                   to={'/products?search=men'}
-                  href=''
+                  p
                   className='text-[1.1rem] text-[#222]'
                 >
                   MEN
@@ -85,19 +85,13 @@ const Header = () => {
         </div>
         <ul className='absolute right-0 top-0 flex gap-4 items-center mt-2'>
           <li>
-            <a href='' className='font-light'>
-              order status
-            </a>
+            <p className='font-light'>order status</p>
           </li>
           <li>
-            <a href='' className='font-light'>
-              help
-            </a>
+            <p className='font-light'>help</p>
           </li>
           <li>
-            <a href='' className='font-light'>
-              newsletter
-            </a>
+            <p className='font-light'>newsletter</p>
           </li>
           <li>
             <Link to={'/register'} className='font-light'>
@@ -105,16 +99,16 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <a href=''>
+            <p>
               <img
                 src='https://adl-foundation.adidas.com/prod/v40.0.0/assets/flags/gb.svg'
                 alt=''
                 className='h-[11px] w-[20px]'
               />
-            </a>
+            </p>
           </li>
           <li>
-            <Link to={'/login'} href='' className='font-light'>
+            <Link to={'/login'} className='font-light'>
               login
             </Link>
           </li>

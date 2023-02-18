@@ -4,33 +4,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ImPencil2 } from 'react-icons/im';
 import { MdDelete } from 'react-icons/md';
 import getProducts from '../redux/fnFetch/getProducts';
+import deleteProduct from '../redux/fnFetch/deleteProduct';
 const Products = () => {
   const dispatch = useDispatch();
-  const [deletedId, setDeletedId] = useState(0);
-  const { products, isLoading, errMsg } = useSelector((state) => state.product);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [deletedId]);
-  if (isLoading) {
-    return <h1>loading</h1>;
-  }
+  const { products, isLoading, errMsg, isLoadingDelete } = useSelector(
+    (state) => state.product
+  );
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      const res = await fetch(`http://localhost:3000/${id}`, {
-        method: 'delete',
-        headers: {
-          access_token: localStorage.getItem('access_token'),
-        },
-      });
-      if (!res.ok) {
-        throw new Error(res.text());
-      }
-      setDeletedId(id);
+      await dispatch(deleteProduct(id));
     } catch (err) {
       console.log(err);
     }
   };
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
+  if (isLoading) {
+    return <h1>loading</h1>;
+  }
 
   return (
     <>

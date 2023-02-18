@@ -26,7 +26,7 @@ function Detail() {
   if (isLoading) {
     return <h1>loadingn</h1>;
   }
-  console.log(detailData, 'ini detail');
+
   return (
     <>
       <div className='flex'>
@@ -64,18 +64,7 @@ function Detail() {
                 ULTRALIGHT PERFORMANCE GOLF SHOES MADE IN PART WITH RECYCLED
                 MATERIALS.
               </h5>
-              <p className='font-light mt-4'>
-                Rethink what light can do and bring your A-game because these
-                adidas golf shoes give new meaning to lightweight performance.
-                The adidas ZG23 BOA® golf shoes are designed for tournament days
-                and competitive play. From the comfort and added energy of a
-                hybrid Lightstrike midsole to the support of a waterproof, soft
-                and adaptive upper, they fuel every drive with an ultralight
-                feel to give you a competitive edge. Dial in the BOA® Fit System
-                for the stability to match powerful drives, and enjoy the
-                close-to-the-ground feel of the six-cleat outsole for a stable
-                stance. After all, you're here to compete.
-              </p>
+              <p className='font-light mt-4'>{detailData.description}</p>
             </div>
           </div>
         </div>

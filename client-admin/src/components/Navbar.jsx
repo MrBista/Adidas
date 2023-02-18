@@ -19,18 +19,6 @@ const Navbar = () => {
             Admin Panel
           </Link>
         </div>
-
-        <div className='w-32 flex items-center'>
-          <div>
-            Hai Bisma
-            <p>Admin</p>
-          </div>
-          <img
-            src='https://source.unsplash.com/O3ymvT7Wf9U'
-            alt=''
-            className='w-10 h-10 object-cover rounded-full'
-          />
-        </div>
       </nav>
     </header>
   );

@@ -3,6 +3,7 @@ import AddCategories from '../pages/AddCategories';
 import AddProduct from '../pages/AddProduct';
 import Categories from '../pages/Categories';
 import Dashboard from '../pages/Dashboard';
+import EditCategories from '../pages/EditCategories';
 import EditProduct from '../pages/EditProduct';
 import FormUser from '../pages/FormUser';
 import Products from '../pages/Products';
@@ -38,8 +39,12 @@ const router = createBrowserRouter([
         element: <AddCategories />,
       },
       {
+        path: '/edit-category/:id',
+        element: <EditCategories />,
+      },
+      {
         path: 'register',
-        element: <FormUser />,
+        element: <FormUser registerPage />,
       },
     ],
     loader: () => {
@@ -56,7 +61,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'login',
-        element: <FormUser login />,
+        element: <FormUser />,
       },
     ],
     loader: () => {

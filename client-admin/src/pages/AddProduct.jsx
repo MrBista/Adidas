@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useMatch, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import getCategory from '../redux/fnFetch/getCategory';
+import postProduct from '../redux/fnFetch/addProduct';
+import { cleanAllError } from '../redux/action/actionCreator';
 
 const AddProduct = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [inputImages, setInputImages] = useState(['']);
   const [productForm, setProductForm] = useState({
     name: '',
     mainImg: '',
     price: '',
-    categoryId: '',
+    categoryId: '1',
     description: '',
   });
+
+  const {
+    isLoading,
+    categories,
+    errMsg: errCategory,
+  } = useSelector((state) => state.category);
+  const { errMsg: errProduct } = useSelector((state) => state.product);
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(cleanAllError());
+  }, []);
 
   const addImagesField = () => {
     setInputImages([...inputImages, ``]);
@@ -22,37 +38,32 @@ const AddProduct = () => {
   const handelInputImages = (value, index) => {
     const newImages = [...inputImages];
     newImages[index] = value;
+    console.log(newImages);
     setInputImages(newImages);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const images = inputImages.map((el) => {
-        return { imgUrl: el };
-      });
-      console.log(images, productForm);
+      await dispatch(postProduct(productForm, inputImages));
 
-      const res = await fetch('http://localhost:3000/add', {
-        headers: {
-          'Content-Type': 'application/json',
-          access_token: localStorage.getItem('access_token'),
-        },
-        body: JSON.stringify({ ...productForm, images: images }),
-        method: 'post',
-      });
-      if (!res.ok) {
-        throw new Error(res.text());
-      }
-      const resJson = await res.json();
-      console.log(resJson);
       navigate('/products');
     } catch (err) {
-      console.log(err);
+      console.log(JSON.parse(err));
     }
   };
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
   return (
     <>
       <div className=' '>
+        {errProduct?.message && (
+          <p className='text-red-500 text-[2rem] capitalize'>
+            {errProduct?.message}
+          </p>
+        )}
+
         <form className='[&>*]:my-6' onSubmit={handleSubmit}>
           <div>
             <label>
@@ -81,11 +92,19 @@ const AddProduct = () => {
                 placeholder='Title News'
                 v-model='product.categoryId'
                 name='categoryId'
+                defaultValue={''}
                 onChange={handleChange}
               >
-                <option value='1'>Dewasa</option>
-                <option value='2'>Kids</option>
-                <option value='3'>Women</option>
+                <option disabled value={''}>
+                  --Category--
+                </option>
+                {categories.map(({ name, id }) => {
+                  return (
+                    <option value={id} key={id}>
+                      {name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

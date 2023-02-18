@@ -8,7 +8,7 @@ const getCategory = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(fetchCategoryPending());
-      const res = await fetch('http://localhost:3000/categories', {
+      const res = await fetch(import.meta.env.VITE_APP_URL + '/categories', {
         headers: {
           'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -17,7 +17,7 @@ const getCategory = () => {
         method: 'get',
       });
       if (!res.ok) {
-        throw new Error(res.text());
+        throw new Error(await res.text());
       }
       const resJson = await res.json();
       dispatch(fetchCategorySuccess(resJson));

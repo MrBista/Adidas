@@ -20,7 +20,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         onDelete: 'cascade',
       },
-      imgUrl: { type: DataTypes.STRING, allowNull: false },
+      imgUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Images is required',
+          },
+          notNull: {
+            msg: 'Images is required',
+          },
+        },
+      },
     },
     {
       sequelize,

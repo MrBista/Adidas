@@ -20,11 +20,71 @@ module.exports = (sequelize, DataTypes) => {
   }
   Product.init(
     {
-      name: { type: DataTypes.TEXT, allowNull: false },
-      slug: { type: DataTypes.TEXT, allowNull: false },
-      description: { type: DataTypes.TEXT, allowNull: false },
-      price: { type: DataTypes.INTEGER, allowNull: false },
-      mainImg: { type: DataTypes.TEXT, allowNull: false },
+      name: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'name is required',
+          },
+          notNull: {
+            msg: 'name is required',
+          },
+        },
+      },
+      slug: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'slug is required',
+          },
+          notNull: {
+            msg: 'slug is required',
+          },
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'description is required',
+          },
+          notNull: {
+            msg: 'description is required',
+          },
+        },
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'price is required',
+          },
+          notNull: {
+            msg: 'price is required',
+          },
+          isPriceEnough(val) {
+            if (val < 3000) {
+              throw new Error('Minimum price is 3000');
+            }
+          },
+        },
+      },
+      mainImg: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'main img is required',
+          },
+          notNull: {
+            msg: 'main img is required',
+          },
+        },
+      },
       categoryId: { type: DataTypes.INTEGER, onDelete: 'cascade' },
       authorId: { type: DataTypes.INTEGER, onDelete: 'cascade' },
     },

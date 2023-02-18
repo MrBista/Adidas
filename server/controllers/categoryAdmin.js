@@ -1,31 +1,26 @@
 const { Category, sequelize } = require('../models');
 class CategoryAdmin {
-  static async getAllCategory(req, res) {
+  static async getAllCategory(req, res, next) {
     // console.log('masuk sini');
     try {
-      console.log('masuk');
       const categories = await Category.findAll({});
       // console.log(categories, 'ini salah?');
       res.status(200).json(categories);
     } catch (err) {
-      // console.log(err, 'ini error');
-      res.status(500).json(err);
+      next(err);
     }
   }
-  static async addCategory(req, res) {
+  static async addCategory(req, res, next) {
     const txt = await sequelize.transaction();
     try {
       const { name } = req.body;
       await Category.create({ name }, { transaction: txt });
       res.status(201).json({ message: 'successfully adding category' });
-      txt.commit();
+      await txt.commit();
     } catch (err) {
-      txt.commit();
-      if (err.name === 'SequelizeValidationError') {
-        res.status(200).json({ message: err.errors[0].message });
-      } else {
-        res.status(500).json(err);
-      }
+      await txt.rollback();
+
+      next(err);
     }
   }
   static async deleteCategory(req, res) {
@@ -42,11 +37,52 @@ class CategoryAdmin {
       });
       res.status(200).json({ message: 'successfully delete category' });
     } catch (err) {
-      if (err.name === 'not found') {
-        res.status(404).json({ message: 'category not found' });
-      } else {
-        res.status(500).json(err);
+      next(err);
+    }
+  }
+  static async editCategory(req, res) {
+    const txt = await sequelize.transaction();
+    try {
+      const { id } = req.params;
+      const { name } = req.body;
+      const singleCategory = await Category.findByPk(id);
+      if (!singleCategory) {
+        throw { name: 'category empty' };
       }
+      await Category.update(
+        {
+          name,
+        },
+        {
+          transaction: txt,
+          where: {
+            id,
+          },
+        }
+      );
+      await txt.commit();
+      res.status(200).json({ message: 'successfully update category' });
+    } catch (err) {
+      await txt.rollback();
+
+      next(err);
+    }
+  }
+  static async getCategoryById(req, res) {
+    try {
+      const { id } = req.params;
+      const category = await Category.findOne({
+        where: {
+          id,
+        },
+      });
+      if (!category) {
+        throw { name: 'no category' };
+      }
+      res.status(200).json(category);
+    } catch (err) {
+      // res.status(500).json(err);
+      next(err);
     }
   }
 }

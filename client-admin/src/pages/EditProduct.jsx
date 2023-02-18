@@ -5,11 +5,26 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import getCategory from '../redux/fnFetch/getCategory';
+import getSingleProduct from '../redux/fnFetch/singleProduct';
+import editProduct from '../redux/fnFetch/editProduct';
+import { cleanAllError } from '../redux/action/actionCreator';
 
 const EditProduct = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const dispatch = useDispatch();
+  const {
+    isLoading,
+    categories,
+    errMsg: errCategory,
+  } = useSelector((state) => state.category);
+  const {
+    exactProduct,
+    isLoading: loading,
+    errMsg: errProduct,
+  } = useSelector((state) => state.product);
   const [inputImages, setInputImages] = useState(['']);
   const [productForm, setProductForm] = useState({
     name: '',
@@ -19,28 +34,38 @@ const EditProduct = () => {
     description: '',
   });
   useEffect(() => {
-    const exactProduct = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/' + id, {
-          headers: {
-            access_token: localStorage.getItem('access_token'),
-          },
-        });
-        if (!res) {
-          throw new Error(res.text());
-        }
-        const resJson = await res.json();
-        // console.log(resJson, 'ini json');
-        setProductForm({ ...productForm, ...resJson });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    exactProduct();
+    // const exactProduct = async () => {
+    //   try {
+    //     const res = await fetch('http://localhost:3000/' + id, {
+    //       headers: {
+    //         access_token: localStorage.getItem('access_token'),
+    //       },
+    //     });
+    //     if (!res) {
+    //       throw new Error(res.text());
+    //     }
+    //     const resJson = await res.json();
+    //     setProductForm({ ...productForm, ...resJson });
+    //     setInputImages((prevVal) => {
+    //       const newImage = resJson.Images.map((el) => el.imgUrl);
+    //       console.log(newImage, 'new image ajg');
+    //       return [...newImage];
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    dispatch(getSingleProduct(id));
+    dispatch(getCategory());
+    dispatch(cleanAllError());
   }, []);
-  const addImagesField = () => {
-    setInputImages([...inputImages, ``]);
-  };
+  useEffect(() => {
+    setProductForm({ ...productForm, ...exactProduct });
+    setInputImages((prevVal) => {
+      let newImage = exactProduct?.Images?.map((el) => el.imgUrl);
+      return newImage;
+    });
+  }, [Object.values(exactProduct).length > 0]);
   const handleChange = (e) => {
     setProductForm({ ...productForm, [e.target.name]: e.target.value });
   };
@@ -51,35 +76,46 @@ const EditProduct = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // try {
+    //   const images = inputImages.map((el) => {
+    //     return { imgUrl: el };
+    //   });
+    //   const res = await fetch(`${import.meta.env.VITE_APP_URL}/${id}`, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       access_token: localStorage.getItem('access_token'),
+    //     },
+    //     body: JSON.stringify({ ...productForm, images }),
+    //     method: 'put',
+    //   });
+    //   if (!res.ok) {
+    //     throw new Error(res.text());
+    //   }
+    //   const resJson = await res.json();
+    //   navigate('/products');
+    // } catch (err) {
+    //   console.log(err);
+    // }
     try {
-      const images = inputImages.map((el) => {
-        return { imgUrl: el };
-      });
-      console.log(images, productForm);
+      await dispatch(editProduct(id, productForm, inputImages));
 
-      const res = await fetch('http://localhost:3000/add', {
-        headers: {
-          'Content-Type': 'application/json',
-          access_token: localStorage.getItem('access_token'),
-        },
-        body: JSON.stringify({ ...productForm, images: images }),
-        method: 'post',
-      });
-      if (!res.ok) {
-        throw new Error(res.text());
-      }
-      const resJson = await res.json();
-      console.log(resJson);
       navigate('/products');
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(productForm, 'ada gak sih?');
-
+  if (isLoading || loading) {
+    return <h1>Loading</h1>;
+  }
+  // console.log(productForm);
   return (
     <>
       <div className=' '>
+        {errProduct?.message && (
+          <p className='text-red-500 text-[2rem] capitalize'>
+            {errProduct?.message}
+          </p>
+        )}
         <form className='[&>*]:my-6' onSubmit={handleSubmit}>
           <div>
             <label>
@@ -106,13 +142,18 @@ const EditProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Title News'
-                v-model='product.categoryId'
                 name='categoryId'
                 onChange={handleChange}
+                defaultValue={productForm?.Category?.id}
               >
-                <option value='1'>Dewasa</option>
-                <option value='2'>Kids</option>
-                <option value='3'>Women</option>
+                <option disabled>--Category--</option>
+                {categories.map(({ name, id }) => {
+                  return (
+                    <option value={id} key={id}>
+                      {name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
@@ -165,7 +206,7 @@ const EditProduct = () => {
             </div>
           </div>
 
-          {productForm.Images?.map((el, index) => {
+          {inputImages?.map((el, index) => {
             return (
               <div key={index}>
                 <label>
@@ -178,25 +219,12 @@ const EditProduct = () => {
                     placeholder='Image shoe'
                     name={index}
                     onChange={(e) => handelInputImages(e.target.value, index)}
-                    value={el.imgUrl}
+                    value={el}
                   />
                 </div>
               </div>
             );
           })}
-          <div>
-            <div className='w-[700px]'>
-              <button
-                type='button'
-                className='bg-gray-300 w-[45%] rounded-full px-4 py-4'
-                placeholder='Image shoe'
-                v-model='product.imgUrl'
-                onClick={addImagesField}
-              >
-                Add Images
-              </button>
-            </div>
-          </div>
 
           <div className='flex [&>*]:px-4 [&>*]:py-4 w-[700px] justify-between'>
             <button
@@ -208,7 +236,9 @@ const EditProduct = () => {
             >
               Cancel
             </button>
-            <button className='bg-gray-300 w-[45%] rounded-full'>Submit</button>
+            <button className='bg-gray-300 w-[45%] rounded-full' type='submit'>
+              Submit
+            </button>
           </div>
         </form>
       </div>

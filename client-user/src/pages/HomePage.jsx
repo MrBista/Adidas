@@ -48,11 +48,11 @@ function HomePage() {
         </h2>
         <div className='flex flex-wrap gap-3 justify-center'>
           <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <a href=''>
+            <p>
               <span class='material-symbols-outlined absolute top-2 right-2'>
                 favorite
               </span>
-            </a>
+            </p>
 
             <div className='flex flex-col'>
               <img
@@ -71,11 +71,11 @@ function HomePage() {
             </div>
           </div>
           <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <a href=''>
+            <p>
               <span class='material-symbols-outlined absolute top-2 right-2'>
                 favorite
               </span>
-            </a>
+            </p>
 
             <div className='flex flex-col'>
               <img
@@ -94,11 +94,11 @@ function HomePage() {
             </div>
           </div>
           <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <a href=''>
+            <p>
               <span class='material-symbols-outlined absolute top-2 right-2'>
                 favorite
               </span>
-            </a>
+            </p>
 
             <div className='flex flex-col'>
               <img
@@ -117,11 +117,11 @@ function HomePage() {
             </div>
           </div>
           <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <a href=''>
+            <p>
               <span class='material-symbols-outlined absolute top-2 right-2'>
                 favorite
               </span>
-            </a>
+            </p>
 
             <div className='flex flex-col'>
               <img

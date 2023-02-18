@@ -50,7 +50,7 @@ const getShoes = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(fetchShoesPending());
-      const response = await fetch('http://localhost:3000/products');
+      const response = await fetch('http://localhost:3000/pub');
       if (!response.ok) {
         throw new Error(response.text());
       }
@@ -65,12 +65,12 @@ const getDetailShoe = (slug) => {
   return async (dispatch, getState) => {
     try {
       dispatch(fetchShoeDetailPending());
-      const res = await fetch(`http://localhost:3000/products?slug=${slug}`);
+      const res = await fetch(`http://localhost:3000/pub/${slug}`);
       if (!res.ok) {
         throw new Error(res.text());
       }
       const resJson = await res.json();
-      dispatch(fetchShoeDetailSuccess(resJson[0]));
+      dispatch(fetchShoeDetailSuccess(resJson));
     } catch (err) {
       dispatch(fetchShoeDetailFailed(err));
     }
