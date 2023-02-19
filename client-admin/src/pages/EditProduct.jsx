@@ -10,6 +10,7 @@ import getCategory from '../redux/fnFetch/getCategory';
 import getSingleProduct from '../redux/fnFetch/singleProduct';
 import editProduct from '../redux/fnFetch/editProduct';
 import { cleanAllError } from '../redux/action/actionCreator';
+import Loader from './Loader';
 
 const EditProduct = () => {
   const navigate = useNavigate();
@@ -34,27 +35,6 @@ const EditProduct = () => {
     description: '',
   });
   useEffect(() => {
-    // const exactProduct = async () => {
-    //   try {
-    //     const res = await fetch('http://localhost:3000/' + id, {
-    //       headers: {
-    //         access_token: localStorage.getItem('access_token'),
-    //       },
-    //     });
-    //     if (!res) {
-    //       throw new Error(res.text());
-    //     }
-    //     const resJson = await res.json();
-    //     setProductForm({ ...productForm, ...resJson });
-    //     setInputImages((prevVal) => {
-    //       const newImage = resJson.Images.map((el) => el.imgUrl);
-    //       console.log(newImage, 'new image ajg');
-    //       return [...newImage];
-    //     });
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
     dispatch(getSingleProduct(id));
     dispatch(getCategory());
     dispatch(cleanAllError());
@@ -76,26 +56,6 @@ const EditProduct = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const images = inputImages.map((el) => {
-    //     return { imgUrl: el };
-    //   });
-    //   const res = await fetch(`${import.meta.env.VITE_APP_URL}/${id}`, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       access_token: localStorage.getItem('access_token'),
-    //     },
-    //     body: JSON.stringify({ ...productForm, images }),
-    //     method: 'put',
-    //   });
-    //   if (!res.ok) {
-    //     throw new Error(res.text());
-    //   }
-    //   const resJson = await res.json();
-    //   navigate('/products');
-    // } catch (err) {
-    //   console.log(err);
-    // }
     try {
       await dispatch(editProduct(id, productForm, inputImages));
 
@@ -105,9 +65,8 @@ const EditProduct = () => {
     }
   };
   if (isLoading || loading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
-  // console.log(productForm);
   return (
     <>
       <div className=' '>
@@ -126,7 +85,6 @@ const EditProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Name shoe'
-                v-model='product.title'
                 name='name'
                 value={productForm.name}
                 onChange={handleChange}
@@ -166,7 +124,6 @@ const EditProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Description News'
-                v-model='product.content'
                 name='description'
                 value={productForm.description}
                 onChange={handleChange}
@@ -182,7 +139,6 @@ const EditProduct = () => {
                 type='number'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Price shoe'
-                v-model='product.content'
                 name='price'
                 value={productForm.price}
                 onChange={handleChange}
@@ -198,7 +154,6 @@ const EditProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Image shoe'
-                v-model='product.imgUrl'
                 name='mainImg'
                 value={productForm.mainImg}
                 onChange={handleChange}

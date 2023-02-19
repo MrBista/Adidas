@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import getCategory from '../redux/fnFetch/getCategory';
 import getProducts from '../redux/fnFetch/getProducts';
+import Loader from './Loader';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { product, category } = useSelector((state) => state);
@@ -9,9 +10,9 @@ const Dashboard = () => {
     dispatch(getCategory());
     dispatch(getProducts());
   }, []);
-  console.log(product, '========', category);
+
   if (product.isLoading || category.isLoading) {
-    return <h1>Loading ....</h1>;
+    return <Loader />;
   }
 
   return (

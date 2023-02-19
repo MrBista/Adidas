@@ -3,6 +3,7 @@ import useFetch from '../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShoes } from '../redux/action/actionCreator';
 import CardShoe from '../components/CardShoe';
+import Loader from './Loader';
 const ProductPage = () => {
   const { isLoading, data, errorMsg } = useSelector((state) => {
     return state.shoes;
@@ -12,9 +13,9 @@ const ProductPage = () => {
     dispatch(getShoes());
   }, []);
   if (isLoading) {
-    return <h1>masih loading</h1>;
+    return <Loader />;
   }
-  console.log(data, '=======', errorMsg);
+
   return (
     <>
       <div className='w-[90vw] max-w-[1368px] m-auto mt-4'>

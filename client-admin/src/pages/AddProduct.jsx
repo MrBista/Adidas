@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import getCategory from '../redux/fnFetch/getCategory';
 import postProduct from '../redux/fnFetch/addProduct';
 import { cleanAllError } from '../redux/action/actionCreator';
+import Loader from './Loader';
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const AddProduct = () => {
     }
   };
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
   return (
     <>
@@ -74,7 +75,6 @@ const AddProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Name shoe'
-                v-model='product.title'
                 name='name'
                 value={productForm.name}
                 onChange={handleChange}
@@ -90,7 +90,6 @@ const AddProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Title News'
-                v-model='product.categoryId'
                 name='categoryId'
                 defaultValue={''}
                 onChange={handleChange}
@@ -117,7 +116,6 @@ const AddProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Description News'
-                v-model='product.content'
                 name='description'
                 value={productForm.description}
                 onChange={handleChange}
@@ -133,7 +131,6 @@ const AddProduct = () => {
                 type='number'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Price shoe'
-                v-model='product.content'
                 name='price'
                 value={productForm.price}
                 onChange={handleChange}
@@ -149,7 +146,6 @@ const AddProduct = () => {
                 type='text'
                 className='w-full border border-black px-4 py-2 rounded-md focus:outline-none focus:shadow-lg focus:shadow-indigo-200'
                 placeholder='Image shoe'
-                v-model='product.imgUrl'
                 name='mainImg'
                 value={productForm.mainImg}
                 onChange={handleChange}
@@ -181,7 +177,6 @@ const AddProduct = () => {
                 type='button'
                 className='bg-gray-300 w-[45%] rounded-full px-4 py-4'
                 placeholder='Image shoe'
-                v-model='product.imgUrl'
                 onClick={addImagesField}
               >
                 Add Images

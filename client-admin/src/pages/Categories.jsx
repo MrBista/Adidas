@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { GrUpdate } from 'react-icons/gr';
 import getCategory from '../redux/fnFetch/getCategory';
 import deleteCategory from '../redux/fnFetch/deleteCategory';
+import Loader from './Loader';
 const Categories = () => {
   const dispatch = useDispatch();
   const { isLoading, categories, errMsg } = useSelector(
@@ -14,28 +15,10 @@ const Categories = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    // try {
-    //   const res = await fetch(
-    //     `${import.meta.env.VITE_APP_URL}/categories/${id}`,
-    //     {
-    //       method: 'delete',
-    //       headers: {
-    //         access_token: localStorage.getItem('access_token'),
-    //       },
-    //     }
-    //   );
-    //   if (!res.ok) {
-    //     throw new Error(await res.text());
-    //   }
-    //   dispatch(getCategory());
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
     dispatch(deleteCategory(id));
   };
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
   return (
     <>

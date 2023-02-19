@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import getSingleCategory from '../redux/fnFetch/singleCategory';
 import editCategory from '../redux/fnFetch/editCategory';
 import { cleanAllErrorCategory } from '../redux/action/actionCreator';
+import Loader from './Loader';
 const EditCategories = () => {
   const { id } = useParams();
   const [category, setCategory] = useState({ name: '' });
@@ -13,26 +14,6 @@ const EditCategories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    // const currentCategory = async () => {
-    //   try {
-    //     const res = await fetch(
-    //       import.meta.env.VITE_APP_URL + '/categories/' + id,
-    //       {
-    //         headers: {
-    //           access_token: localStorage.getItem('access_token'),
-    //         },
-    //       }
-    //     );
-    //     if (!res) {
-    //       throw new Error(await res.text());
-    //     }
-    //     const resJson = await res.json();
-    //     setCategory(resJson.name);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // currentCategory();
     dispatch(getSingleCategory(id));
     dispatch(cleanAllErrorCategory());
     setCategory(exactCategory);
@@ -43,25 +24,6 @@ const EditCategories = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const res = await fetch(
-    //     import.meta.env.VITE_APP_URL + '/categories/' + id,
-    //     {
-    //       method: 'put',
-    //       headers: {
-    //         access_token: localStorage.getItem('access_token'),
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ name: category }),
-    //     }
-    //   );
-    //   if (!res.ok) {
-    //     throw new Error(res.text());
-    //   }
-    //   navigate('/categories');
-    // } catch (err) {
-    //   console.log(err);
-    // }
     try {
       await dispatch(editCategory(id, category));
       navigate('/categories');
@@ -70,9 +32,9 @@ const EditCategories = () => {
     }
   };
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
-  console.log(errMsg, '<=====');
+
   return (
     <div className='mt-6'>
       {errMsg?.message && (

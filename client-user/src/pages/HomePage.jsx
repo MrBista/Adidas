@@ -1,9 +1,24 @@
 import React from 'react';
 import { BsArrowRight } from 'react-icons/bs';
-import CardShoeHome from '../components/CardShoeHome';
+import { getShoes } from '../redux/action/actionCreator';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
+import { useEffect } from 'react';
+import CardShoe from '../components/CardShoe';
+import Loader from './Loader';
 
 function HomePage() {
+  const { isLoading, data, errorMsg } = useSelector((state) => {
+    return state.shoes;
+  });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getShoes());
+  }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <div className='mb-2'>
@@ -37,107 +52,12 @@ function HomePage() {
         </div>
       </div>
       <div className='w-[95vw] m-auto '>
-        <h3 className='capitalize text-3xl'>What'S HOT</h3>
-        <div className='flex flex-wrap gap-3 justify-center'>
-          <CardShoeHome />
-        </div>
-      </div>
-      <div className='w-[95vw] m-auto '>
-        <h2 className='text-center mt-[5rem] text-[2rem] font-semibold'>
-          Best Of Adidas
-        </h2>
-        <div className='flex flex-wrap gap-3 justify-center'>
-          <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <p>
-              <span class='material-symbols-outlined absolute top-2 right-2'>
-                favorite
-              </span>
-            </p>
-
-            <div className='flex flex-col'>
-              <img
-                src='https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/h/p/hp7878_2_footwear_photography_side20lateral20view_grey.jpg'
-                alt=''
-                className='w-full h-[255px] object-cover'
-              />
-              <div className='mt-[.85rem] p-2'>
-                <h2 className='text-gray-400 font-light capitalize'>
-                  Unisex Golf
-                </h2>
-                <p className='font-light mt-3'>
-                  4DFWD 2. Innovated to turn weight into forward motion.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <p>
-              <span class='material-symbols-outlined absolute top-2 right-2'>
-                favorite
-              </span>
-            </p>
-
-            <div className='flex flex-col'>
-              <img
-                src='https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/h/p/hp7878_2_footwear_photography_side20lateral20view_grey.jpg'
-                alt=''
-                className='w-full h-[255px] object-cover'
-              />
-              <div className='mt-[.85rem] p-2'>
-                <h2 className='text-gray-400 font-light capitalize'>
-                  Unisex Golf
-                </h2>
-                <p className='font-light mt-3'>
-                  4DFWD 2. Innovated to turn weight into forward motion.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <p>
-              <span class='material-symbols-outlined absolute top-2 right-2'>
-                favorite
-              </span>
-            </p>
-
-            <div className='flex flex-col'>
-              <img
-                src='https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/h/p/hp7878_2_footwear_photography_side20lateral20view_grey.jpg'
-                alt=''
-                className='w-full h-[255px] object-cover'
-              />
-              <div className='mt-[.85rem] p-2'>
-                <h2 className='text-gray-400 font-light capitalize'>
-                  Unisex Golf
-                </h2>
-                <p className='font-light mt-3'>
-                  4DFWD 2. Innovated to turn weight into forward motion.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className='w-[257px] border rounded overflow-hidden shadow-md relative hover:border hover:border-black transition-all ease-linear duration-100 cursor-pointer'>
-            <p>
-              <span class='material-symbols-outlined absolute top-2 right-2'>
-                favorite
-              </span>
-            </p>
-
-            <div className='flex flex-col'>
-              <img
-                src='https://www.adidas.co.id/media/catalog/product/cache/3bec5fdb79d91223b1a151be2b21ce8d/h/p/hp7878_2_footwear_photography_side20lateral20view_grey.jpg'
-                alt=''
-                className='w-full h-[255px] object-cover'
-              />
-              <div className='mt-[.85rem] p-2'>
-                <h2 className='text-gray-400 font-light capitalize'>
-                  Unisex Golf
-                </h2>
-                <p className='font-light mt-3'>
-                  4DFWD 2. Innovated to turn weight into forward motion.
-                </p>
-              </div>
-            </div>
+        <h3 className='capitalize text-3xl ml-[9rem] my-5'>What'S HOT</h3>
+        <div className='w-[90vw] max-w-[1368px] m-auto mt-4'>
+          <div className='flex flex-wrap gap-3 justify-center'>
+            {data.map((el) => {
+              return <CardShoe {...el} isHome />;
+            })}
           </div>
         </div>
       </div>

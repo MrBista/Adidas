@@ -5,6 +5,7 @@ import { ImPencil2 } from 'react-icons/im';
 import { MdDelete } from 'react-icons/md';
 import getProducts from '../redux/fnFetch/getProducts';
 import deleteProduct from '../redux/fnFetch/deleteProduct';
+import Loader from './Loader';
 const Products = () => {
   const dispatch = useDispatch();
   const { products, isLoading, errMsg, isLoadingDelete } = useSelector(
@@ -22,7 +23,7 @@ const Products = () => {
   }, []);
 
   if (isLoading) {
-    return <h1>loading</h1>;
+    return <Loader />;
   }
 
   return (

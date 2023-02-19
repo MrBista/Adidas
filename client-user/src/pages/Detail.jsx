@@ -12,6 +12,9 @@ import { BsArrowRight } from 'react-icons/bs';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetailShoe } from '../redux/action/actionCreator';
+import { Link } from 'react-router-dom';
+import Loader from './Loader';
+
 function Detail() {
   const { slug } = useParams();
   const dispatch = useDispatch();
@@ -19,12 +22,12 @@ function Detail() {
     detail: detailData,
     isLoading,
     errMsg,
-  } = useSelector((state) => state.shoeDetail);
+  } = useSelector((state) => state.shoes);
   useEffect(() => {
     dispatch(getDetailShoe(slug));
   }, [slug]);
   if (isLoading) {
-    return <h1>loadingn</h1>;
+    return <Loader />;
   }
 
   return (
@@ -45,12 +48,12 @@ function Detail() {
                 New
               </p>
               <div className='flex gap-2 absolute left-5 top-8'>
-                <a href='' className='flex gap-2'>
+                <Link to='/products' className='flex gap-2'>
                   <span className='material-symbols-outlined'>reply</span>
                   <span className='uppercase font-semi-black underline'>
                     BACK
                   </span>
-                </a>
+                </Link>
                 <span className='font-light cursor-default'>Women</span>
               </div>
             </div>
@@ -60,11 +63,20 @@ function Detail() {
               <h3 className='text-[2rem] text-black uppercase font-[600]'>
                 {detailData?.name}
               </h3>
-              <h5 className='mt-4 italic text-[1.4rem] font-[400]'>
-                ULTRALIGHT PERFORMANCE GOLF SHOES MADE IN PART WITH RECYCLED
-                MATERIALS.
-              </h5>
               <p className='font-light mt-4'>{detailData.description}</p>
+              <p className='mt-8 text-[2.3rem]'>Images</p>
+              <div className='flex flex-wrap mt-5 gap-4'>
+                {detailData?.Images?.map(({ imgUrl }, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={imgUrl}
+                      alt=''
+                      className='w-[300px] h-[300px] rounded shadow'
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

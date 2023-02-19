@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 
 const FormUser = ({ registerPage }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const FormUser = ({ registerPage }) => {
     userName: '',
   });
   const [errMsg, setErrMsg] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
     setUserForm((prevVal) => {
       return { ...prevVal, [e.target.name]: e.target.value };
@@ -63,6 +64,9 @@ const FormUser = ({ registerPage }) => {
       }
     }
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
