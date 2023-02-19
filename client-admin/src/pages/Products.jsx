@@ -6,9 +6,12 @@ import { MdDelete } from 'react-icons/md';
 import getProducts from '../redux/fnFetch/getProducts';
 import deleteProduct from '../redux/fnFetch/deleteProduct';
 import Loader from './Loader';
+import getSingleProduct from '../redux/fnFetch/singleProduct';
+import getCategory from '../redux/fnFetch/getCategory';
 const Products = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { products, isLoading, errMsg, isLoadingDelete } = useSelector(
+  const { products, isLoading, errMsg, isLoadingDetail } = useSelector(
     (state) => state.product
   );
   const handleDelete = async (id) => {
@@ -21,8 +24,14 @@ const Products = () => {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-
+  const toEditProduct = async (id) => {
+    await dispatch(getSingleProduct(id));
+    navigate(`/edit-product/${id}`);
+  };
   if (isLoading) {
+    return <Loader />;
+  }
+  if (isLoadingDetail) {
     return <Loader />;
   }
 
@@ -46,7 +55,7 @@ const Products = () => {
               <th className='px-4 py-2'>Title</th>
               <th className='px-4 py-2'>Category</th>
               <th className='px-4 py-2'>Main Image</th>
-              <th className='px-4 py-2'>Images</th>
+
               <th className='px-4 py-2'>Price</th>
 
               <th className='px-4 py-2'>Author</th>
@@ -87,11 +96,6 @@ const Products = () => {
                         />
                       </div>
                     </td>
-                    <td className=''>
-                      <button className='px-4 py-2 border border-black'>
-                        Show Images
-                      </button>
-                    </td>
 
                     <td>
                       <p>{price}</p>
@@ -101,12 +105,12 @@ const Products = () => {
                     </td>
 
                     <td className='text-center'>
-                      <Link to={`/edit-product/${id}`}>
+                      <button onClick={() => toEditProduct(id)}>
                         <span className='material-symbols-outlined'>
                           {' '}
                           edit{' '}
                         </span>
-                      </Link>
+                      </button>
                     </td>
                     <td className='text-center'>
                       <button onClick={() => handleDelete(id)}>

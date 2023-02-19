@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GrUpdate } from 'react-icons/gr';
 import getCategory from '../redux/fnFetch/getCategory';
 import deleteCategory from '../redux/fnFetch/deleteCategory';
 import Loader from './Loader';
+import getSingleCategory from '../redux/fnFetch/singleCategory';
+import { cleanAllErrorCategory } from '../redux/action/actionCreator';
 const Categories = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isLoading, categories, errMsg } = useSelector(
     (state) => state.category
   );
@@ -20,6 +23,11 @@ const Categories = () => {
   if (isLoading) {
     return <Loader />;
   }
+  const toCategory = async (id) => {
+    await dispatch(getSingleCategory(id));
+    await dispatch(cleanAllErrorCategory());
+    navigate('/edit-category/' + id);
+  };
   return (
     <>
       <div className='mt-4'>
@@ -59,12 +67,12 @@ const Categories = () => {
                     <p>{createdAt.slice(0, 10)}</p>
                   </td>
                   <td className='text-end '>
-                    <Link to={'/edit-category/' + id}>
+                    <button onClick={() => toCategory(id)}>
                       <span className='material-symbols-outlined'>
                         {' '}
                         update{' '}
                       </span>
-                    </Link>
+                    </button>
                   </td>
                   <td className='text-end'>
                     <button onClick={() => handleDelete(id)}>

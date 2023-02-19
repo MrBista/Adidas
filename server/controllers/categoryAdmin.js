@@ -1,10 +1,9 @@
 const { Category, sequelize } = require('../models');
 class CategoryAdmin {
   static async getAllCategory(req, res, next) {
-    // console.log('masuk sini');
     try {
       const categories = await Category.findAll({});
-      // console.log(categories, 'ini salah?');
+
       res.status(200).json(categories);
     } catch (err) {
       next(err);

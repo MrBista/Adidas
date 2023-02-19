@@ -27,10 +27,13 @@ const AddProduct = () => {
     categories,
     errMsg: errCategory,
   } = useSelector((state) => state.category);
-  const { errMsg: errProduct, isLoadingPost } = useSelector(
-    (state) => state.product
-  );
+  const {
+    errMsg: errProduct,
+    isLoadingPost,
+    isLoadingDetail,
+  } = useSelector((state) => state.product);
   useEffect(() => {
+    dispatch(getSingleProduct(id));
     dispatch(getCategory());
     dispatch(cleanAllError());
   }, []);
@@ -44,7 +47,6 @@ const AddProduct = () => {
   const handelInputImages = (value, index) => {
     const newImages = [...inputImages];
     newImages[index] = value;
-    console.log(newImages);
     setInputImages(newImages);
   };
 
@@ -57,6 +59,9 @@ const AddProduct = () => {
     return <Loader />;
   }
   if (isLoadingPost) {
+    return <Loader />;
+  }
+  if (isLoadingDetail) {
     return <Loader />;
   }
   return (

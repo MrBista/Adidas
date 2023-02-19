@@ -19,12 +19,13 @@ import {
 
 const initialState = {
   products: [],
-  isLoading: true,
+  isLoading: false,
   errMsg: '',
   successAdd: '',
   exactProduct: {},
   isLoadingPost: false,
   isLoadingEdit: false,
+  isLoadingDetail: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -58,11 +59,11 @@ const productReducer = (state = initialState, action) => {
     case PRODUCT_DELETE_SUCCESS:
       return { ...state, isLoading: false };
     case SINGLE_PRODUCT_PENDING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingDetail: true };
     case SINGLE_PRODUCT_SUCCESS:
-      return { ...state, isLoading: false, exactProduct: action.payload };
+      return { ...state, isLoadingDetail: false, exactProduct: action.payload };
     case SINGLE_PRODUCT_FAILED:
-      return { ...state, isLoading: false, errMsg: action.payload };
+      return { ...state, isLoadingDetail: false, errMsg: action.payload };
     case PRODUCT_EDIT_PENDING:
       return { ...state, isLoadingEdit: true };
     case PRODUCT_EDIT_FAILED:

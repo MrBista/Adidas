@@ -18,8 +18,6 @@ const EditCategories = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getSingleCategory(id));
-    dispatch(cleanAllErrorCategory());
-    setCategory(exactCategory);
   }, []);
   useEffect(() => {
     setCategory({ ...category, ...exactCategory });
@@ -32,9 +30,10 @@ const EditCategories = () => {
       navigate('/categories');
     } catch (err) {}
   };
-  // if (isLoadingEdit) {
-  //   return <Loader />;
-  // }
+
+  if (isLoadingEdit) {
+    return <Loader />;
+  }
 
   return (
     <div className='mt-6'>

@@ -33,7 +33,7 @@ class ControllerAdmin {
           email,
         },
       });
-      if (!email) {
+      if (!admin) {
         throw { name: 'unAuth' };
       }
       const checkEmail = comparePassword(password, admin.password);
