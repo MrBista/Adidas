@@ -29,8 +29,6 @@ const postProduct = (productForm, inputImages) => {
       // console.log(resJson, '<====== gagal kah?');
       // dispatch(getProducts());
     } catch (err) {
-      // console.log(JSON.parse(err), '<====== gagal kah?2');
-
       dispatch(postProductFailed(JSON.parse(err)));
       throw err;
     }

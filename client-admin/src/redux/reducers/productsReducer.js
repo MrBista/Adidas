@@ -24,6 +24,7 @@ const initialState = {
   successAdd: '',
   exactProduct: {},
   isLoadingPost: false,
+  isLoadingEdit: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -63,11 +64,11 @@ const productReducer = (state = initialState, action) => {
     case SINGLE_PRODUCT_FAILED:
       return { ...state, isLoading: false, errMsg: action.payload };
     case PRODUCT_EDIT_PENDING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingEdit: true };
     case PRODUCT_EDIT_FAILED:
-      return { ...state, errMsg: action.payload, isLoading: false };
+      return { ...state, errMsg: action.payload, isLoadingEdit: false };
     case PRODUCT_EDIT_SUCCESS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoadingEdit: false };
     case CLEAN_ERROR:
       return { ...state, errMsg: '' };
     default:

@@ -9,6 +9,7 @@ const editCategory = (id, category) => {
   return async (dispatch, getSTate) => {
     try {
       dispatch(editCategoryPending());
+
       const res = await fetch(
         import.meta.env.VITE_APP_URL + '/categories/' + id,
         {
@@ -20,13 +21,13 @@ const editCategory = (id, category) => {
           body: JSON.stringify(category),
         }
       );
+      console.log('masuk sini <===========');
       if (!res.ok) {
         throw await res.text();
       }
       await res.json();
       dispatch(editCategorySuccess());
     } catch (err) {
-      console.log(err, 'ini dari fets');
       dispatch(editCategoryFailed(JSON.parse(err)));
       throw err;
       // console.log(err);

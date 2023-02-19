@@ -11,10 +11,12 @@ const Dashboard = () => {
     dispatch(getProducts());
   }, []);
 
-  if (product.isLoading || category.isLoading) {
+  if (product.isLoading) {
     return <Loader />;
   }
-
+  if (category.isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <div className='mt-4'>

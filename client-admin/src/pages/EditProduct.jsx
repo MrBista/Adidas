@@ -24,6 +24,7 @@ const EditProduct = () => {
   const {
     exactProduct,
     isLoading: loading,
+    isLoadingEdit,
     errMsg: errProduct,
   } = useSelector((state) => state.product);
   const [inputImages, setInputImages] = useState(['']);
@@ -64,9 +65,13 @@ const EditProduct = () => {
       console.log(err);
     }
   };
-  if (isLoading || loading) {
+  if (isLoadingEdit) {
     return <Loader />;
   }
+  if (loading) {
+    return <Loader />;
+  }
+  console.log(isLoadingEdit, '<-----');
   return (
     <>
       <div className=' '>

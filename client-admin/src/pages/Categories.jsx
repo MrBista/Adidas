@@ -15,7 +15,7 @@ const Categories = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    dispatch(deleteCategory(id));
+    await dispatch(deleteCategory(id));
   };
   if (isLoading) {
     return <Loader />;

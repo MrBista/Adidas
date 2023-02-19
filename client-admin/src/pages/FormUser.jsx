@@ -38,8 +38,10 @@ const FormUser = ({ registerPage }) => {
         const resJson = await res.json();
         console.log(resJson, '===== access token');
         localStorage.setItem('access_token', resJson.access_token);
+        setIsLoading(false);
         navigate('/');
       } catch (err) {
+        setIsLoading(false);
         setErrMsg(JSON.parse(err).message);
       }
     } else {
@@ -57,9 +59,10 @@ const FormUser = ({ registerPage }) => {
           throw await res.text();
         }
         const resJson = await res.json();
-
+        setIsLoading(false);
         navigate('/');
       } catch (err) {
+        setIsLoading(false);
         setErrMsg(JSON.parse(err).message);
       }
     }

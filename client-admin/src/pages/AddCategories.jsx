@@ -2,26 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import postCategory from '../redux/fnFetch/addCategory';
-import { cleanAllErrorCategory } from '../redux/action/actionCreator';
+import {
+  cleanAllErrorCategory,
+  editProductFailed,
+} from '../redux/action/actionCreator';
+import Loader from './Loader';
 const AddCategories = ({ isEdit }) => {
   const { id } = useParams();
   const [category, setCategory] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { errMsg } = useSelector((state) => state.category);
+  const { errMsg, isLoading } = useSelector((state) => state.category);
   useEffect(() => {
     dispatch(cleanAllErrorCategory());
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(postCategory(category));
-      navigate('/categories');
-    } catch (err) {
-      console.log(err, 'udah bisa juga ajg');
-    }
+    await dispatch(postCategory(category));
+    navigate('/categories');
   };
-
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <div className='mt-6'>

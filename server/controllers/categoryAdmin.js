@@ -23,7 +23,7 @@ class CategoryAdmin {
       next(err);
     }
   }
-  static async deleteCategory(req, res) {
+  static async deleteCategory(req, res, next) {
     try {
       const { id } = req.params;
       const category = await Category.findByPk(id);
@@ -40,7 +40,7 @@ class CategoryAdmin {
       next(err);
     }
   }
-  static async editCategory(req, res) {
+  static async editCategory(req, res, next) {
     const txt = await sequelize.transaction();
     try {
       const { id } = req.params;
@@ -64,11 +64,10 @@ class CategoryAdmin {
       res.status(200).json({ message: 'successfully update category' });
     } catch (err) {
       await txt.rollback();
-
       next(err);
     }
   }
-  static async getCategoryById(req, res) {
+  static async getCategoryById(req, res, next) {
     try {
       const { id } = req.params;
       const category = await Category.findOne({
@@ -81,7 +80,6 @@ class CategoryAdmin {
       }
       res.status(200).json(category);
     } catch (err) {
-      // res.status(500).json(err);
       next(err);
     }
   }

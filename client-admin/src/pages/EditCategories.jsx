@@ -3,12 +3,15 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import getSingleCategory from '../redux/fnFetch/singleCategory';
 import editCategory from '../redux/fnFetch/editCategory';
-import { cleanAllErrorCategory } from '../redux/action/actionCreator';
+import {
+  cleanAllErrorCategory,
+  editCategoryFailed,
+} from '../redux/action/actionCreator';
 import Loader from './Loader';
 const EditCategories = () => {
   const { id } = useParams();
   const [category, setCategory] = useState({ name: '' });
-  const { exactCategory, isLoading, errMsg } = useSelector(
+  const { exactCategory, isLoadingEdit, errMsg } = useSelector(
     (state) => state.category
   );
   const dispatch = useDispatch();
@@ -27,13 +30,11 @@ const EditCategories = () => {
     try {
       await dispatch(editCategory(id, category));
       navigate('/categories');
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoadingEdit) {
+  //   return <Loader />;
+  // }
 
   return (
     <div className='mt-6'>

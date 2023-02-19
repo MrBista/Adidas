@@ -22,6 +22,7 @@ const initialState = {
   isLoading: true,
   errMsg: '',
   exactCategory: {},
+  isLoadingEdit: false,
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -51,11 +52,11 @@ const categoryReducer = (state = initialState, action) => {
     case SINGLE_CATEGORY_FAILED:
       return { ...state, isLoading: false, errMsg: action.payload };
     case CATEGORY_EDIT_PENDING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoadingEdit: true };
     case CATEGORY_EDIT_FAILED:
-      return { ...state, errMsg: action.payload, isLoading: false };
+      return { ...state, errMsg: action.payload, isLoadingEdit: false };
     case CATEGORY_EDIT_SUCCESS:
-      return { ...state, isLoading: false };
+      return { ...state, isLoadingEdit: false };
     case CLEAN_ERROR_CATEGORY:
       return { ...state, errMsg: '' };
     default:

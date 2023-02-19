@@ -3,7 +3,10 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import getCategory from '../redux/fnFetch/getCategory';
 import postProduct from '../redux/fnFetch/addProduct';
-import { cleanAllError } from '../redux/action/actionCreator';
+import {
+  cleanAllError,
+  postProductFailed,
+} from '../redux/action/actionCreator';
 import Loader from './Loader';
 
 const AddProduct = () => {
@@ -47,15 +50,13 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(postProduct(productForm, inputImages));
-
-      navigate('/products');
-    } catch (err) {
-      console.log(JSON.parse(err));
-    }
+    await dispatch(postProduct(productForm, inputImages));
+    navigate('/products');
   };
-  if (isLoading || isLoadingPost) {
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (isLoadingPost) {
     return <Loader />;
   }
   return (
