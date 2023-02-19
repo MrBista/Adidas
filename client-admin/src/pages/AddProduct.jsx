@@ -24,7 +24,9 @@ const AddProduct = () => {
     categories,
     errMsg: errCategory,
   } = useSelector((state) => state.category);
-  const { errMsg: errProduct } = useSelector((state) => state.product);
+  const { errMsg: errProduct, isLoadingPost } = useSelector(
+    (state) => state.product
+  );
   useEffect(() => {
     dispatch(getCategory());
     dispatch(cleanAllError());
@@ -53,7 +55,7 @@ const AddProduct = () => {
       console.log(JSON.parse(err));
     }
   };
-  if (isLoading) {
+  if (isLoading || isLoadingPost) {
     return <Loader />;
   }
   return (

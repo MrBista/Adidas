@@ -84,12 +84,11 @@ class ControllerProductAdmin {
         el.productId = productCrated.id;
         return el;
       });
-      await Image.bulkCreate(putImage, { transaction: trx });
+      await Image.bulkCreate(putImage, { transaction: trx, validate: true });
       res.status(201).json({ message: 'successfully add product' });
       await trx.commit();
     } catch (err) {
       await trx.rollback();
-
       next(err);
     }
   }
@@ -132,7 +131,7 @@ class ControllerProductAdmin {
         el.productId = productId;
         return el;
       });
-      await Image.bulkCreate(putImage, { transaction: trx });
+      await Image.bulkCreate(putImage, { transaction: trx, validate: true });
       await trx.commit();
       res.status(200).json({ message: 'successfully update product' });
     } catch (err) {

@@ -23,6 +23,7 @@ const initialState = {
   errMsg: '',
   successAdd: '',
   exactProduct: {},
+  isLoadingPost: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -34,15 +35,21 @@ const productReducer = (state = initialState, action) => {
     case PRODUCT_FAILED:
       return { ...state, isLoading: false, errMsg: action.payload };
     case PRODUCT_ADD_PENDING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, isLoadingPost: true };
     case PRODUCT_ADD_SUCCESS:
       return {
         ...state,
         isLoading: false,
+        isLoadingPost: false,
         successAdd: action.payload,
       };
     case PRODUCT_ADD_FAILED:
-      return { ...state, isLoading: false, errMsg: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        errMsg: action.payload,
+        isLoadingPost: false,
+      };
     case PRODUCT_DELETE_PENDING:
       return { ...state, isLoading: true };
     case PRODUCT_DELETE_FAILED:

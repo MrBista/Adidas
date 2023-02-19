@@ -16,6 +16,8 @@ const errorHandler = (err, req, res, next) => {
     res.status(400).json({ message: 'Password is required' });
   } else if (err.name === 'unAuth') {
     res.status(401).json({ message: 'Invalid email/password' });
+  } else if (err.name === 'AggregateError') {
+    res.status(400).json({ message: err.errors[0].errors.errors[0].message });
   } else {
     res.status(500).json({ message: 'Internal server error' });
   }

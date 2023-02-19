@@ -50,7 +50,8 @@ const getShoes = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(fetchShoesPending());
-      const response = await fetch('http://localhost:3000/pub');
+      const response = await fetch(import.meta.env.VITE_APP_URL + '/pub');
+
       if (!response.ok) {
         throw new Error(response.text());
       }
@@ -65,7 +66,7 @@ const getDetailShoe = (slug) => {
   return async (dispatch, getState) => {
     try {
       dispatch(fetchShoeDetailPending());
-      const res = await fetch(`http://localhost:3000/pub/${slug}`);
+      const res = await fetch(import.meta.env.VITE_APP_URL + `/pub/${slug}`);
       if (!res.ok) {
         throw new Error(res.text());
       }
