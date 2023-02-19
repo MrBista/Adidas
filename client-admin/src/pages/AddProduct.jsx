@@ -33,7 +33,6 @@ const AddProduct = () => {
     isLoadingDetail,
   } = useSelector((state) => state.product);
   useEffect(() => {
-    dispatch(getSingleProduct(id));
     dispatch(getCategory());
     dispatch(cleanAllError());
   }, []);

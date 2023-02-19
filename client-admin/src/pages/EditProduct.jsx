@@ -63,7 +63,7 @@ const EditProduct = () => {
 
       navigate('/products');
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   if (isLoadingEdit) {
