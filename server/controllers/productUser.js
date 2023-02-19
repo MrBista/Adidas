@@ -6,12 +6,6 @@ class ControllerProductUser {
       const products = await Product.findAll({
         include: [
           {
-            model: User,
-            attributes: {
-              exclude: ['password', 'createdAt', 'updatedAt', 'role'],
-            },
-          },
-          {
             model: Category,
             attributes: { exclude: ['createdAt', 'updatedAt'] },
           },
