@@ -1,95 +1,71 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10107914&assignment_repo_type=AssignmentRepo)
+# Documentation
 
-# P3-Challenge-1
+# server 
+- 0. navigate to server folder
+- 1. npm install for install all packages
+- 2. npx sequelize db:create for create database in your local , because I am using postgresql please make sure you already install postgress in your local
+- 3. npx sequelize db:migrate
+- 4. npx sequlize db:seed:all
+- 5. npx nodemon app.js for runing server locally 
 
-- Tema Aplikasi: ...
-- CSS Framework: ...
+# client-user
+- 0. navigate to client-user folder
+- 1. npm install for install all packages
+- 2. create file .env and put url server into variabel , the name of variabel must similar like in .example.env ,if you not change port server the default is http://localhost:3000
+- npm run dev for runing client-user locally
 
-Struktur Folder:
+# client-admin
+- 0. navigate to client-admin folder
+- 1. npm install for install all packages
+- 2. create file .env and put url server into variabel , the name of variabel must similar like in .example.env ,if you not change port server the default is http://localhost:3000
+- npm run dev for runing client-user locally
 
-- server (PORT: 3000)
-- client-user
-- client-admin
+# Account Active for client-admin
+1. Email = bisma@gmail.com
+2. Password = bisma
 
-## W1D1
+# Here is link how to download Postgress in your local
+1. windwos : <https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql/>
+2. mackOs : <https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-macos/>
+3. linux : <https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-linux/>
 
-Target:
 
-- [x] Lecture - React Intro
-- [x] React: Class Component vs Function Component
-- [ ] Mempelajari State menggunakan useState
-- [ ] Mengirim Props baik berupa sebuah state atau function
-- [ ] Event Handling (onClick, onChange, onSubmit)
-- [ ] Conditional Rendering di dalam React
-- [ ] Looping List of Data di dalam React
-- [ ] Lifecycle component menggunakan useEffect
-- [x] Membuat server (json-server)
-- [x] Membuat react app untuk client-user (Styling)
-- [ ] Membuat react app untuk client-admin (CRUD)
-- [x] Menentukan Thema Aplikasi
-- [x] Menentukan Design dan pemilihan CSS Framework
+# Result: 
 
-**Report:**
+## client-user
+1. Home Page
+![Screenshot from 2023-06-11 17-40-45](https://github.com/MrBista/Adidas/assets/93068364/716eb88c-5ab6-41ad-810f-1751b5211277)
 
-...
+![Screenshot from 2023-06-11 17-40-55](https://github.com/MrBista/Adidas/assets/93068364/f08ce373-bd6b-47c7-bd65-99edde58be70)
 
-> contoh: Hari ini saya belajar React Component. Saya memahami bagaimana cara React bekerja. Lifecycle yang sudah saya coba adalah componentDidMount yang digunakan untuk fetch data dst. Namun saya belum mencoba menggunakan onSubmit dikarenakan data yang didapat belum sesuai.
-> Pada tugas ini, saya memilih Tema A dengan mengambil referensi dari B. Saya juga akan menggunakan CSS Framework yaitu Tailwind CSS
+![Screenshot from 2023-06-11 17-40-59](https://github.com/MrBista/Adidas/assets/93068364/95294d32-1018-47f1-adbe-26932731b1e4)
 
-## W1D2
+![Screenshot from 2023-06-11 17-40-59](https://github.com/MrBista/Adidas/assets/93068364/aa45f828-f6b5-4ff0-ad5e-65e14c0fa141)
 
-Target:
+![Screenshot from 2023-06-11 17-41-03](https://github.com/MrBista/Adidas/assets/93068364/ee392541-725f-4601-82ff-11c14cc0c56c)
 
-- [ ] Lecture - Custom Hooks
-- [ ] Rules of Hooks
-- [ ] Lecture - React-Router
-- [ ] Membuat router user-side (min: home, detail)
-- [ ] Membuat router admin-side (min: login, add admin, CRUD main entitas, CRUD another entitas)
-- [ ] Membuat privateRoute untuk admin
+2. Product Page
+![Screenshot from 2023-06-11 17-41-14](https://github.com/MrBista/Adidas/assets/93068364/17111d9e-73c3-4080-8008-6f9c8eaccee2)
 
-**Report:**
+3. Detail Page
+![Screenshot from 2023-06-11 17-41-23](https://github.com/MrBista/Adidas/assets/93068364/d66030d5-68f0-4af7-8536-eb06b8164df1)
 
-...
+## client-admin (cms)
+1. Login Page
+![Screenshot from 2023-06-11 17-44-25](https://github.com/MrBista/Adidas/assets/93068364/c4282f8e-c99e-4f62-a9ce-02de57614398)
 
-## W1D3
+2. Dashboard Page
+![Screenshot from 2023-06-11 17-44-37](https://github.com/MrBista/Adidas/assets/93068364/6706caf1-ecea-4b41-99cc-eb3e82259fd6)
 
-Target:
+3. Product Page
+![Screenshot from 2023-06-11 17-44-43](https://github.com/MrBista/Adidas/assets/93068364/882817e8-7906-438b-b54c-80497062fbec)
 
-- [ ] Lecture - Redux
-- [ ] State vs Global State
-- [ ] Bagaimana cara membuat Store
-- [ ] Bagaimana cara membuat Reducer
-- [ ] Bagaimana cara membuat Action
-- [ ] Membuat Action Creators
-- [ ] Membuat Action Types
-- [ ] Lecture - Redux-thunk (handle async)
-- [ ] Cara menggunakan combineReducers
+4. Category Page
+![Screenshot from 2023-06-11 17-44-46](https://github.com/MrBista/Adidas/assets/93068364/46d3d574-9e05-4412-810d-4af103540c8b)
 
-**Report:**
+5. Register Page
+![Screenshot from 2023-06-11 17-44-51](https://github.com/MrBista/Adidas/assets/93068364/be136b97-6ace-46ec-9a3c-47c16c273735)
 
-...
 
-## W1D4
 
-Target:
 
-- [ ] Lecture - SQL Advance DQL
-- [ ] Membuat server mengguanakan express.js, postgreSQL dan Sequelize
-- [ ] Menentukan associations antar tables
-- [ ] Lecture - SQL Transaction
-- [ ] Membuat transaction saat membuat entitas baru pada main table. Pastikan ada assosiasi di dalamnya
-
-**Report:**
-
-...
-
-## W1D5
-
-Target:
-
-- [ ] LC Simulation
-- [ ] Practice, Practice, Practice
-
-**Report:**
-
-...
