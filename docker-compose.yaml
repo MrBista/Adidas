@@ -1,0 +1,41 @@
+services:
+  adidas-be:
+    build: ./server
+    container_name: adidas-be
+    env_file: ./server/.env
+    ports:
+      - "8081:3000"
+    networks:
+      - bisman-portofolio-network
+
+  adidas-client-user:
+    build:
+      context: ./client-user
+      args:
+        VITE_APP_URL: ${VITE_APP_URL:-http://localhost:8081}
+    container_name: adidas-client-user
+    env_file: ./client-user/.env
+    ports:
+      - "5173:80"
+    depends_on:
+      - adidas-be
+    networks:
+      - bisman-portofolio-network
+
+  adidas-client-admin:
+    build:
+      context: ./client-admin
+      args:
+        VITE_APP_URL: ${VITE_APP_URL:-http://localhost:8081}
+    container_name: adidas-client-admin
+    env_file: ./client-admin/.env
+    ports:
+      - "5174:80"
+    depends_on:
+      - adidas-be
+    networks:
+      - bisman-portofolio-network
+
+networks:
+  bisman-portofolio-network:
+    external: true
