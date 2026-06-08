@@ -1,4 +1,6 @@
 const errorHandler = (err, req, res, next) => {
+  console.error(`[ERROR] ${req.method} ${req.originalUrl} -`, err.name, err.message);
+
   if (
     err.name === 'SequelizeValidationError' ||
     err.name === 'SequelizeUniqueConstraintError'
@@ -19,6 +21,7 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name === 'AggregateError') {
     res.status(400).json({ message: err.errors[0].errors.errors[0].message });
   } else {
+    console.error('[ERROR] Stack:', err.stack);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
